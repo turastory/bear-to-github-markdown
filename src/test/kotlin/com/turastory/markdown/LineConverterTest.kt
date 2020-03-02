@@ -3,7 +3,7 @@ package com.turastory.markdown
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 
-class ConverterTest : FunSpec({
+class LineConverterTest : FunSpec({
     val simpleClassifier = object : Classifier {
         override fun invoke(line: String): Type {
             return when {
@@ -14,13 +14,13 @@ class ConverterTest : FunSpec({
             }
         }
     }
-    val rules: Map<Type, LineConverter> = mapOf(
+    val rules: Map<Type, LineConversionRule> = mapOf(
         Type.Question to { line: String -> listOf("qq") },
         Type.Answer to { line: String -> listOf("aa") },
         Type.Code to { line: String -> listOf("```") },
         Type.None to { line: String -> listOf("nn") }
     )
-    val converter = Converter(simpleClassifier, rules)
+    val converter = LineConverter(simpleClassifier, rules)
 
     test("converter should skip converting the codes") {
         val inputs = listOf(

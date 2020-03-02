@@ -1,6 +1,5 @@
 package com.turastory.markdown
 
-
 enum class Type {
     Header,
     Quote,
