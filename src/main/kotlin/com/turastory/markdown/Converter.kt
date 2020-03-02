@@ -7,11 +7,11 @@ typealias LineConverter = (String) -> List<String>
  * depending on the rules provided.
  */
 interface Converter {
-    operator fun invoke(lines: List<String>, rules: Map<Type, LineConverter>): List<String>
+    operator fun invoke(lines: List<String>): List<String>
 }
 
-fun Converter(classifier: Classifier): Converter = object : Converter {
-    override fun invoke(lines: List<String>, rules: Map<Type, LineConverter>): List<String> {
+fun Converter(classifier: Classifier, rules: Map<Type, LineConverter>): Converter = object : Converter {
+    override fun invoke(lines: List<String>): List<String> {
         val convertWithType: LineConverter = { line ->
             val type = classifier(line)
             rules[type]?.invoke(line) ?: listOf(line)

@@ -20,7 +20,7 @@ class ConverterTest : FunSpec({
         Type.Code to { line: String -> listOf("```") },
         Type.None to { line: String -> listOf("nn") }
     )
-    val converter = Converter(simpleClassifier)
+    val converter = Converter(simpleClassifier, rules)
 
     test("converter should skip converting the codes") {
         val inputs = listOf(
@@ -42,12 +42,12 @@ class ConverterTest : FunSpec({
             "```"
         )
 
-        converter(inputs, rules) shouldBe outputs
+        converter(inputs) shouldBe outputs
     }
 
     test("converter with a single line of text") {
         val inputs = listOf("a: This is an answer")
         val outputs = listOf("aa")
-        converter(inputs, rules) shouldBe outputs
+        converter(inputs) shouldBe outputs
     }
 })
