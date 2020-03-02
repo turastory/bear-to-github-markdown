@@ -6,6 +6,7 @@ enum class Type {
     Question,
     Answer,
     Code,
+    Empty,
     None
 }
 

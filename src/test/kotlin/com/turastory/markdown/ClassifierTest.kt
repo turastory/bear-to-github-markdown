@@ -31,11 +31,15 @@ class ClassifierTest : FunSpec({
         classifier("``scheme") shouldNotBe Type.Code
     }
 
+    test("Classify blanks") {
+        classifier("") shouldBe Type.Empty
+    }
+
     test("Classify none types") {
         classifier("Android Studio") shouldBe Type.None
         classifier("* Just a regular unordered list") shouldBe Type.None
         classifier("1. Just a regular ordered list") shouldBe Type.None
-        classifier("") shouldBe Type.None
         classifier(" ") shouldBe Type.None
+        classifier("") shouldNotBe Type.None
     }
 })

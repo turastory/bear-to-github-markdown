@@ -16,6 +16,7 @@ fun Classifier(): Classifier = object : Classifier {
         line.startsWith("\t") or line.startsWith("    ") -> Type.Question
         line.startsWith("->") -> Type.Answer
         line.startsWith("```") -> Type.Code
+        line.isEmpty() -> Type.Empty
         else -> Type.None
     }
 
