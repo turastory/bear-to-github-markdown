@@ -6,7 +6,7 @@ fun main() {
     val indent = "&nbsp;".times(8)
     val lineEndSpace = "  "
 
-    val rules: Map<Type, LineConversionRule> = mapOf(
+    val lineConversionRules: Map<Type, LineConversionRule> = mapOf(
         Type.Quote to { line: String ->
             listOf("$line$lineEndSpace")
         },
@@ -21,8 +21,10 @@ fun main() {
         }
     )
 
+    val postProcessingRules = listOf { text: String -> text.insertBreaks() }
+
     val classifier = Classifier()
-    val converter = LineConverter(classifier, rules)
+    val converter = LineConverter(classifier, lineConversionRules)
 
     File("input")
         .requireListFiles()
@@ -30,7 +32,9 @@ fun main() {
             file.name to file.readLines()
                 .let(converter::invoke)
                 .joinToString(separator = "\n")
-                .insertBreaks()
+        }
+        .map { (fileName, text) ->
+            fileName to postProcessingRules.fold(text) { s, process -> process(s) }
         }
         .forEach { (name, text) ->
             with(File("output/$name")) {
