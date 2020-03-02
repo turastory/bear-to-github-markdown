@@ -2,6 +2,9 @@
 
 package com.turastory.markdown
 
+/**
+ * Classifier reads a single line to determine the type.
+ */
 interface Classifier {
     operator fun invoke(line: String): Type
 }
